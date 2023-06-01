@@ -109,11 +109,6 @@ def prepare_postgres_query(pg_query):
 
     return pg_query
 
-def detect_missing_parenthesis(query):
-    pattern = r'"([^"]+)"\s+NUMERIC(?!\(\d+\))'
-    matches = re.findall(pattern, query)
-    return matches
-
 def add_parenthesis(query):
     pattern = re.compile(r'"([^"]+)"\s+NUMERIC\([^\)]*\)')
     matches = re.findall(pattern, query)
