@@ -3,15 +3,22 @@ import re
 
 
 # Oracle database connection details
-oracle_username = 'your_oracle_username'
-oracle_password = 'your_oracle_password'
-oracle_host = 'your_oracle_host'
-oracle_port = 'your_oracle_port'
-oracle_service_name = 'your_oracle_service_name'
+oracle_username     = 'lagogestion'
+oracle_password     = 'mateoEloy'
+oracle_host         = '10.101.4.12'
+oracle_port         = '1521'
+oracle_service_name = 'XE'
+
+# PostgreSQL database connection details
+postgres_username   = 'lagogestion'
+postgres_password   = 'lagogestion21'
+postgres_host       = '10.101.4.12'
+postgres_port       = '5432'
+postgres_database   = 'lagogestion'
 
 
-postgres_schema = 'postgres_schema'
-postgres_table = 'postgres_table'
+postgres_schema = 'sc_lagogestion'
+postgres_table = 'ins_clasificacion'
 
 def extract_table_creation_query(oracle_connection, table_name):
     cursor = oracle_connection.cursor()
@@ -102,6 +109,11 @@ def prepare_postgres_query(pg_query):
 
     return pg_query
 
+def detect_missing_parenthesis(query):
+    pattern = r'"([^"]+)"\s+NUMERIC(?!\(\d+\))'
+    matches = re.findall(pattern, query)
+    return matches
+
 def add_parenthesis(query):
     pattern = re.compile(r'"([^"]+)"\s+NUMERIC\([^\)]*\)')
     matches = re.findall(pattern, query)
@@ -111,10 +123,17 @@ def add_parenthesis(query):
     
     return query
 
+def convert_column_names_to_lowercase(query):
+    pattern = r'"([^"]*)"'
+    matches = re.findall(pattern, query)
+    for match in matches:
+        lowercase_match = match.lower()
+        query = query.replace('"{0}"'.format(match), '"{0}"'.format(lowercase_match))
+    return query
 
 
 # Nombre de la tabla en Oracle
-oracle_table_name = 'table_name'
+oracle_table_name = 'ins_clasificacion'
 
 # Construir la cadena de conexión a Oracle
 dsn = cx_Oracle.makedsn(oracle_host, oracle_port, sid=oracle_service_name)
@@ -128,6 +147,7 @@ oracle_query = extract_table_creation_query(oracle_connection, oracle_table_name
 pg_query = convert_query(oracle_query, postgres_schema, postgres_table)
 prepared_query = prepare_postgres_query(pg_query)
 final_query = add_parenthesis(prepared_query)
+final_query = convert_column_names_to_lowercase(final_query)
 
 print(final_query)
 
