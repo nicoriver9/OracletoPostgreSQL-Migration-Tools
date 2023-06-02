@@ -9,16 +9,9 @@ oracle_host = 'your_oracle_host'
 oracle_port = 'your_oracle_port'
 oracle_service_name = 'your_oracle_service_name'
 
-# PostgreSQL database connection details
-postgres_username = 'your_postgres_username'
-postgres_password = 'your_postgres_password'
-postgres_host = 'your_postgres_host'
-postgres_port = 'your_postgres_port'
-postgres_database = 'your_postgres_database'
 
-
-postgres_schema = 'schema'
-postgres_table = 'table_name'
+postgres_schema = 'postgres_schema'
+postgres_table = 'postgres_table'
 
 def extract_table_creation_query(oracle_connection, table_name):
     cursor = oracle_connection.cursor()
@@ -121,14 +114,14 @@ def add_parenthesis(query):
 
 
 # Nombre de la tabla en Oracle
-table_name = 'table_name'
+oracle_table_name = 'table_name'
 
 # Construir la cadena de conexión a Oracle
 dsn = cx_Oracle.makedsn(oracle_host, oracle_port, sid=oracle_service_name)
 oracle_connection = cx_Oracle.connect(user=oracle_username, password=oracle_password, dsn=dsn)
 
 # Extraer la consulta de creación de la tabla de Oracle
-oracle_query = extract_table_creation_query(oracle_connection, table_name)
+oracle_query = extract_table_creation_query(oracle_connection, oracle_table_name)
 
 # print(oracle_query)
 
