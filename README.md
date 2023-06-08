@@ -23,7 +23,7 @@ This repository contains a set of functions to facilitate the migration of data 
 2. Import the required functions in your migration script:
 
     ```python
-    from oracle_to_postgres import extract_and_load_data, extract_and_create_sequences, convert_query
+    from oracle_to_postgres import extract_and_load_data, extract_and_create_sequences, extract_and_create_tables
     ```
 
 3. Use the functions as per your needs. Below are examples of usage:
