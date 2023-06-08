@@ -12,9 +12,9 @@ This repository contains a set of functions to facilitate the migration of data 
 
 - `extract_and_create_sequences`: This function allows you to extract sequences from Oracle and create them in PostgreSQL, assigning them the corresponding current value.
 
-### 3. Conversion of Oracle table creation query to PostgreSQL
+### 3. Conversion of Oracle table creation and commit query to PostgreSQL
 
-- `convert_query`: This function converts an Oracle table creation query to its equivalent in PostgreSQL. It adjusts data types and adds the schema and table name in PostgreSQL.
+- `extract_and_create_tables`: This function converts an Oracle table creation query to its equivalent in PostgreSQL. It adjusts data types and adds the schema and table name in PostgreSQL.
 
 ## How to Use the Functions
 
